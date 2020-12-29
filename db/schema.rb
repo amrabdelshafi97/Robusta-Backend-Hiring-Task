@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2020_12_29_160046) do
     t.string "rate_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "featured"
+    t.boolean "featured", default: false
   end
 
   create_table "news", force: :cascade do |t|
