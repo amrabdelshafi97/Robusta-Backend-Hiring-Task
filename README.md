@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Robusta-Backend-Hiring-Task
 Ruby on Rails - Technical Task For Robusta Hiring 
 =======
@@ -26,4 +25,3 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
->>>>>>> master
