@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_160046) do
+ActiveRecord::Schema.define(version: 2020_12_30_214212) do
 
   create_table "actors", force: :cascade do |t|
     t.string "display_name"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 2020_12_29_160046) do
     t.date "birthdate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "gender"
+    t.date "deathdate"
   end
 
   create_table "awards", force: :cascade do |t|
@@ -63,6 +65,15 @@ ActiveRecord::Schema.define(version: 2020_12_29_160046) do
     t.index ["movie_id"], name: "index_movie_awards_on_movie_id"
   end
 
+  create_table "movie_genres", force: :cascade do |t|
+    t.integer "movie_id", null: false
+    t.integer "genre_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["genre_id"], name: "index_movie_genres_on_genre_id"
+    t.index ["movie_id"], name: "index_movie_genres_on_movie_id"
+  end
+
   create_table "movies", force: :cascade do |t|
     t.string "title"
     t.string "description"
@@ -89,6 +100,16 @@ ActiveRecord::Schema.define(version: 2020_12_29_160046) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "user_movie_rates", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "movie_id", null: false
+    t.integer "rate"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "index_user_movie_rates_on_movie_id"
+    t.index ["user_id"], name: "index_user_movie_rates_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "display_name"
     t.string "emial"
@@ -110,6 +131,10 @@ ActiveRecord::Schema.define(version: 2020_12_29_160046) do
   add_foreign_key "movie_actors", "movies"
   add_foreign_key "movie_awards", "awards"
   add_foreign_key "movie_awards", "movies"
+  add_foreign_key "movie_genres", "genres"
+  add_foreign_key "movie_genres", "movies"
+  add_foreign_key "user_movie_rates", "movies"
+  add_foreign_key "user_movie_rates", "users"
   add_foreign_key "watchlists", "movies"
   add_foreign_key "watchlists", "users"
 end
