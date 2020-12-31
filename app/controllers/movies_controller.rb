@@ -1,6 +1,4 @@
 class MoviesController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   # GET /movie - Get All Movies List
   # GET /movie?category=genre - Get All Movies List Categorized Bu "genre"
   # GET /movie?sort=release_date - Get All Movies List Sorted By "release_date"
@@ -22,7 +20,7 @@ class MoviesController < ApplicationController
 
     if query_params.has_key?("week_limit")
       week_limit_no = query_params["week_limit"]
-      @movies = @movies.where('release_date > ?', (DateTime.now - week_limit_no.week))
+      @movies = @movies.where('release_date > ?', week_limit_no.week.ago)
     end
 
     if query_params.has_key?("featured")
@@ -99,6 +97,33 @@ class MoviesController < ApplicationController
     render json: "Movie Not Found", status: 404
   end
 
+  # post /movie/:id/rate - Add User Rate from 0 to 10 To A Movie
+  def addMovieRate
+    req_params = movie_user_rate_params
+    movie_id = params[:id]
+    movie = Movie.find(movie_id)
+    movie.movie_rates.build({ user_id: req_params["user_id"] }).save!
+    render json: "Rate Submitted",status: 200
+  end
+
+  # post /movie/:id/watchlist - Add A Movie For A User Watchlist
+  def addMovieToUserWatchlist
+    req_params = movie_user_rate_params
+    movie_id = params[:id]
+    movie = Movie.find(movie_id)
+    movie.watchlists.build({ user_id: req_params["user_id"] }).save!
+    render json: "Added To Watchlist",status: 200
+  end
+
+  # post /movie/:id/comment - Add A User Comment/Review On A Movie
+  def addUserCommentToMovie
+    req_params = movie_user_rate_params
+    movie_id = params[:id]
+    movie = Movie.find(movie_id)
+    movie.comments.build({ user_id: req_params["user_id"] }).save!
+    render json: "Comment Submitted",status: 200
+  end
+
   private
 
   def movie_params
@@ -107,5 +132,17 @@ class MoviesController < ApplicationController
 
   def movie_details_params
     params.permit(:actors_ids, :awards_ids, :genres_ids, :director_id)
+  end
+
+  def movie_user_rate_params
+    params.permit(:user_id, :rate)
+  end
+
+  def movie_user_watchlist_params
+    params.permit(:user_id)
+  end
+
+  def movie_user_comment_params
+    params.permit(:user_id, :comment)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_31_193324) do
+ActiveRecord::Schema.define(version: 2020_12_31_231430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 2020_12_31_193324) do
 
 # Could not dump table "celebrity" because of following StandardError
 #   Unknown type 'celebrity_type' for column 'celebrity_type'
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "movie_id", null: false
+    t.string "comment", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "index_comments_on_movie_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "genres", force: :cascade do |t|
     t.text "genre", null: false
@@ -46,6 +56,17 @@ ActiveRecord::Schema.define(version: 2020_12_31_193324) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["genre_id"], name: "index_movie_genres_on_genre_id"
     t.index ["movie_id"], name: "index_movie_genres_on_movie_id"
+  end
+
+  create_table "movie_rates", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "movie_id", null: false
+    t.float "rate"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "index_movie_rates_on_movie_id"
+    t.index ["user_id", "movie_id"], name: "index_movie_rates_on_user_id_and_movie_id", unique: true
+    t.index ["user_id"], name: "index_movie_rates_on_user_id"
   end
 
   create_table "movies", force: :cascade do |t|
@@ -88,10 +109,14 @@ ActiveRecord::Schema.define(version: 2020_12_31_193324) do
     t.index ["user_id"], name: "index_watchlists_on_user_id"
   end
 
+  add_foreign_key "comments", "movies"
+  add_foreign_key "comments", "users"
   add_foreign_key "movie_awards", "awards"
   add_foreign_key "movie_awards", "movies"
   add_foreign_key "movie_genres", "genres"
   add_foreign_key "movie_genres", "movies"
+  add_foreign_key "movie_rates", "movies"
+  add_foreign_key "movie_rates", "users"
   add_foreign_key "watchlists", "movies"
   add_foreign_key "watchlists", "users"
 end

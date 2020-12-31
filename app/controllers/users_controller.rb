@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  
   # GET /user - Get All Users List
   def index
     render json: User.all
@@ -16,7 +14,7 @@ class UsersController < ApplicationController
     user = User.create(user_params)
     render json: user
   end
-  
+
   # PUT/PATCH /user/:id - Update A User By ID From Users List
   def update
     begin
@@ -31,6 +29,11 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy!
     render json: {}, status: 204
+  end
+
+  # Delete /user/login - Authenticate User
+  def userLogin
+    #TODO Authenticate User
   end
 
   private

@@ -1,6 +1,4 @@
 class AwardsController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   # GET /award - Get All Awards List
   def index
     render json: Award.all

@@ -1,6 +1,4 @@
   class NewsController < ApplicationController
-    skip_before_action :verify_authenticity_token
-  
     # GET /news - Get All News List
     def index
       render json: News.all, status: 200

@@ -1,6 +1,4 @@
 class GenresController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  
   # GET /genre - Get All Genres List
   def index
     render json: Genre.all

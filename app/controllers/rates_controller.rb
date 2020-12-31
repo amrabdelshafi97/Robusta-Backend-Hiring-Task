@@ -1,6 +1,4 @@
   class RatesController < ApplicationController
-    skip_before_action :verify_authenticity_token
-  
     # GET /rate - Get All Rate List
     def index
       render json: Rate.all

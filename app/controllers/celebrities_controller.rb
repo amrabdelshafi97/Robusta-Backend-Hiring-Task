@@ -1,6 +1,4 @@
 class CelebritiesController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   # GET /celebrity - Get All Celebrities List
   def index
     render json: Celebrity.all, status: 200
