@@ -1,21 +1,21 @@
-class ActorsController < ApplicationController
+class CelebritiesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    render json: Actor.all, status: 200
+    render json: Celebrity.all, status: 200
   end
 
   def show
-    render json: Actor.find(params[:id])
+    render json: Celebrity.find(params[:id])
   end
 
   def create
-    actor = Actor.create(actor_params)
+    actor = Celebrity.create(actor_params)
     render json: actor
   end
 
   def destroy
-    Actor.find(params[:id]).destroy!
+    Celebrity.find(params[:id]).destroy!
     render json: {}, status: 200
   end
 
