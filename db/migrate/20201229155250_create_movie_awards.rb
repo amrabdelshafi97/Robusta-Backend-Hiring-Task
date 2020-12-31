@@ -6,5 +6,7 @@ class CreateMovieAwards < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+    add_index :movie_awards, [:movie_id, :award_id], unique: true
+
   end
 end

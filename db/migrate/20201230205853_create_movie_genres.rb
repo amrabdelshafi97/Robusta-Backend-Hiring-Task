@@ -6,5 +6,7 @@ class CreateMovieGenres < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+    add_index :movie_genres, [:movie_id, :genre_id], unique: true
+
   end
 end

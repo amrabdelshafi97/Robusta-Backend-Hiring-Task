@@ -67,7 +67,7 @@ class MoviesController < ApplicationController
       end
     end
 
-    if params.has_key? ("director_id")
+    if params.has_key?("director_id")
       director_id = params["director_id"]
       if Celebrity.exists?(id: director_id, type: "director")
         movie.director_id = director_id
@@ -78,16 +78,17 @@ class MoviesController < ApplicationController
     render json: movie, status: 201
   end
 
-  # PUT/PATCH /movie - Add A New Movie To Movies List
-  # User Can Use This To Add Movies To Featured Movies List
+  # PUT/PATCH /movie/:id - Upadate A Movie By ID From Movies List
+  # User Can Use This To Add/Remove Movies To/From Featured Movies List
   def update
     begin
       @movie = Movie.update(movie_params)
     rescue
       return render status: 500
     end
-    render json: @movie,status: 202
+    render json: @movie, status: 202
   end
+
   # Delete /movie/:id - Delete Movie By ID From Movies List
   def destroy
     movie_id = params[:id]

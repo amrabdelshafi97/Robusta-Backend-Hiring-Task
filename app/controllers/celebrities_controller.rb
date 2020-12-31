@@ -1,19 +1,33 @@
 class CelebritiesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  # GET /celebrity - Get All Celebrities List
   def index
     render json: Celebrity.all, status: 200
   end
 
+  # GET /celebrity/:id - Get Celebrity By ID From Celebrities List
   def show
     render json: Celebrity.find(params[:id])
   end
 
+  # POST /celebrity - Add A New Celebrity To Celebrities List
   def create
     actor = Celebrity.create(actor_params)
     render json: actor
   end
 
+  # PUT/PATCH /celebrity/id - Update A Celebrity By ID From Celebrities List
+  def update
+    begin
+      @celebrity = Award.update(award_params)
+    rescue
+      return render status: 500
+    end
+    render json: @celebrity, status: 202
+  end
+
+  # Delete /celebrity/:id - Delete Celebrity By ID From Celebrities List
   def destroy
     Celebrity.find(params[:id]).destroy!
     render json: {}, status: 200
