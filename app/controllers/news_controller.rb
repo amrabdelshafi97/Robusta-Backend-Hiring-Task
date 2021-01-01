@@ -38,7 +38,7 @@ class NewsController < ApplicationController
     render json: {}, status: 204
   end
 
-  # GET /news?query=something - Search In News Content About Word "something"
+  # GET /news/search?query=something - Search In News Content About Word "something"
   def search
     return unless request.query_parameters['query']
     query = request.query_parameters['query']
