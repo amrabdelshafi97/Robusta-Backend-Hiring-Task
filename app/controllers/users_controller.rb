@@ -70,7 +70,8 @@ class UsersController < ApplicationController
 
   #GET /user/:id/watchlist - Get User Movies Watchlist
   def getUserMovieWatchList
-    render json: Watchlist.find(user_id: params[:id])
+    user_movies = User.find(params[:id]).movies
+    render json: user_movies, status: 200
   end
 
   private
