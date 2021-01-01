@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     render json: @user, status: 202
   end
 
-  # Delete /user/:id - Delete User By ID From Users List
+  # DELETE /user/:id - Delete User By ID From Users List
   def destroy
     User.find(params[:id]).destroy!
     render json: {}, status: 204

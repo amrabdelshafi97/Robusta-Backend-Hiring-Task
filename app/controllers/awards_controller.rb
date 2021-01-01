@@ -25,7 +25,7 @@ class AwardsController < ApplicationController
     render json: @award, status: 202
   end
 
-  # Delete /award/:id - Delete Award By ID From Awards List
+  # DELETE /award/:id - Delete Award By ID From Awards List
   def destroy
     Award.find(params[:id]).destroy!
     render json: {}, status: 204
