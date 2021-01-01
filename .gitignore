@@ -85,7 +85,6 @@ build-iPhoneSimulator/
 !/storage/.keep
 
 /public/assets
-.byebug_history
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
@@ -97,3 +96,6 @@ build-iPhoneSimulator/
 yarn-debug.log*
 .yarn-integrity
 >>>>>>> master
+
+# Other files
+.idea
