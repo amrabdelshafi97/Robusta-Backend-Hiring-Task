@@ -124,6 +124,14 @@ class MoviesController < ApplicationController
     render json: "Comment Submitted", status: 200
   end
 
+  # GET /movie/search?query=something - Search In News Content About Word "something"
+  def search
+    return unless request.query_parameters['query']
+    query = request.query_parameters['query']
+    movies = Movie.search_movie_title(query)
+    render json: movies
+  end
+
   private
 
   def movie_params

@@ -31,6 +31,14 @@ class CelebritiesController < ApplicationController
     render json: {}, status: 200
   end
 
+  # GET /celebrity/search?query=something - Search In News Content About Word "something"
+  def search
+    return unless request.query_parameters['query']
+    query = request.query_parameters['query']
+    celebrities = Celebrity.search_celebrity(query)
+    render json: celebrities
+  end
+
   private
 
   def actor_params
