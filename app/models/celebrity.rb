@@ -17,7 +17,7 @@ class Celebrity < ApplicationRecord
     end
   end
 
-  def self.search_movie_title(query)
+  def self.search_celebrity(query)
     search(
       query: {
         multi_match: {
