@@ -8,6 +8,8 @@ class CreateMovies < ActiveRecord::Migration[6.1]
       t.integer :director_id, null: false
       t.integer :film_rate_id, null: false
       t.boolean :featured, default: false
+      t.text :poster_path, null: false
+      t.text :language
 
       t.timestamps
     end
