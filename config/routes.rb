@@ -5,8 +5,15 @@ Rails.application.routes.draw do
       post :watchlist, action: :addMovieToUserWatchlist
       post :comment, action: :addUserCommentToMovie
     end
+    collection do
+      get :search, action: :search
+    end
   end
-  resources :celebrity, controller: "celebrities", only: [:index, :show, :create, :destroy, :update]
+  resources :celebrity, controller: "celebrities", only: [:index, :show, :create, :destroy, :update] do
+    collection do
+      get :search, action: :search
+    end
+  end
   resources :news, controller: "news", only: [:index, :show, :create, :destroy, :update] do
     collection do
       get :search, action: :search
