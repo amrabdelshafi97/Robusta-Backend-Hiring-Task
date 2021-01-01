@@ -1,10 +1,11 @@
-class CreateWatchlists < ActiveRecord::Migration[6.1]
+class CreateComments < ActiveRecord::Migration[6.1]
   def change
-    create_table :watchlists do |t|
+    create_table :comments do |t|
       t.references :user, null: false, foreign_key: true
       t.references :movie, null: false, foreign_key: true
+      t.string :comment, null: false
+
       t.timestamps
     end
-    add_index :watchlists, [:user_id, :movie_id], unique: true
   end
 end

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DirectorTest < ActiveSupport::TestCase
+class MovieCelebrityTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

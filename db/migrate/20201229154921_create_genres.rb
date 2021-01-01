@@ -1,7 +1,7 @@
 class CreateGenres < ActiveRecord::Migration[6.1]
   def change
     create_table :genres do |t|
-      t.string :genre
+      t.text :genre, null: false, index: { unique: true }
 
       t.timestamps
     end
