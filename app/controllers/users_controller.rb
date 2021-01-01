@@ -31,9 +31,14 @@ class UsersController < ApplicationController
     render json: {}, status: 204
   end
 
-  # Delete /user/login - Authenticate User
+  # DELETE /user/login - Authenticate User
   def userLogin
     #TODO Authenticate User
+  end
+
+  #GET /user/:id/watchlist - Get User Movies Watchlist
+  def getUserMovieWatchList
+    render json: Watchlist.find(user_id: params[:id])
   end
 
   private

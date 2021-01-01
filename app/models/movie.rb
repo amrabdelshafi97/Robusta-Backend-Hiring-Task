@@ -16,11 +16,21 @@ class Movie < ApplicationRecord
   has_many :watchlists
   has_many :users, through: :watchlists
   has_many :comments
-  has_many :movie_rates
-  has_many :rates, through: :movie_rates
+  has_many :user_movie_rates
 
-  validates_presence_of :title, :description
-  validates :rating, numericality: true
+  validates :title, presence: true, length: { in: 4..20,
+                                              too_short: "Movie title is too short",
+                                              too_long: "Movie title is too long" }
+  validates :description, presence: true, length: { in: 10..100,
+                                                    too_short: "Movie title is too short",
+                                                    too_long: "Movie title is too long" }
+  validates :rating, inclusion: { in: 0.0..10.0 }
+  validates :release_date, format: { with: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/, message: "Invalid date format yyyy-mm-dd" }, presence: true
+  validates :director_id, numericality: { only_integer: true }, presence: true
+  validates :film_rate_id, numericality: { only_integer: true }, presence: true
+  validates :featured, inclusion: [true, false]
+  validates :poster_path, presence: true
+  validates :language
 
   settings do
     mappings dynamic: false do

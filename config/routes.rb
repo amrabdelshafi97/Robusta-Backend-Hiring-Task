@@ -16,6 +16,9 @@ Rails.application.routes.draw do
     collection do
       post :login, action: :userLogin
     end
+    member do
+      get :watchlist, action: :getUserMovieWatchList
+    end
   end
   resources :genre, controller: "genres", only: [:index, :show, :create, :destroy, :update]
   resources :award, controller: "awards", only: [:index, :show, :create, :destroy, :update]
