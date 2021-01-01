@@ -1,34 +1,65 @@
 class AwardsController < ApplicationController
   # GET /award - Get All Awards List
   def index
-    render json: Award.all
+    begin
+      awards = Award.all
+    rescue Exception => exc
+      return render json: { error => exc.message }, status: 500
+    end
+    render json: awards, status: 200
   end
 
   # GET /award/:id - Get Award By ID From Awards List
   def show
-    render json: Award.find(params[:id])
+    begin
+      @award = Award.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      return render json: { "error": "Award not found, Please enter valid award id" }, status: 400
+    rescue Exception => exc
+      return render json: { "error": exc.message }, status: 500
+    end
+    render json: @award, status: 200
   end
 
   # POST /award - Add A New Award To Awards List
   def create
-    award = Award.create(award_params)
-    render json: award
+    begin
+      award = Award.create(award_params)
+      if award.errors.size > 0
+        return render json: award.errors, status: 400
+      end
+    rescue Exception => exc
+      return render json: { "error" => exc.message }, status: 500
+    end
+    render json: award, status: 200
   end
 
   # PUT/PATCH /award/:id - Update An Award By ID From Awards List
   def update
     begin
-      @award = Award.update(award_params)
-    rescue
-      return render status: 500
+      Award.find(params[:id])
+      award = Award.update(award_params)
+      if award.errors.size > 0
+        return render json: award.errors, status: 400
+      end
+    rescue ActiveRecord::RecordNotFound
+      return render json: { "error": "Award not found, Please enter valid award id" }, status: 400
+    rescue Exception => exc
+      return render json: { "error" => exc.message }, status: 500
     end
-    render json: @award, status: 202
+    render json: award, status: 200
   end
 
   # DELETE /award/:id - Delete Award By ID From Awards List
   def destroy
-    Award.find(params[:id]).destroy!
-    render json: {}, status: 204
+    begin
+      Award.find(params[:id]).destroy!
+    rescue ActiveRecord::RecordNotFound
+      return render json: { "error": "Award not found, Please enter valid award id" }, status: 400
+    rescue Exception => exc
+      return render json: { "error": exc.message }, status: 500
+    end
+    render status: 200
   end
 
   private

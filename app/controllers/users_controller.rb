@@ -1,37 +1,69 @@
 class UsersController < ApplicationController
   # GET /user - Get All Users List
+  # GET /user - Get All Users List
   def index
-    render json: User.all
+    begin
+      users = User.all
+    rescue Exception => exc
+      return render json: { error => exc.message }, status: 500
+    end
+    render json: users, status: 200
   end
 
   # GET /user/:id - Get User By ID From Users List
   def show
-    render json: User.find(params[:id])
+    begin
+      user = User.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      return render json: { "error": "User not found, Please enter valid user id" }, status: 400
+    rescue Exception => exc
+      return render json: { "error": exc.message }, status: 500
+    end
+    render json: user, status: 200
   end
 
   # POST /user - Add A New User To Users List
   def create
-    user = User.create(user_params)
-    render json: user
+    begin
+      user = User.create(user_params)
+      if user.errors.size > 0
+        return render json: user.errors, status: 400
+      end
+    rescue Exception => exc
+      return render json: { "error" => exc.message }, status: 500
+    end
+    render json: user, status: 200
   end
 
-  # PUT/PATCH /user/:id - Update A User By ID From Users List
+  # PUT/PATCH /user/:id - Update An User By ID From Users List
   def update
     begin
-      @user = User.update(user_params)
-    rescue
-      return render status: 500
+      User.find(params[:id])
+      user = User.update(user_params)
+      if user.errors.size > 0
+        return render json: user.errors, status: 400
+      end
+    rescue ActiveRecord::RecordNotFound
+      return render json: { "error": "User not found, Please enter valid user id" }, status: 400
+    rescue Exception => exc
+      return render json: { "error" => exc.message }, status: 500
     end
-    render json: @user, status: 202
+    render json: user, status: 200
   end
 
   # DELETE /user/:id - Delete User By ID From Users List
   def destroy
-    User.find(params[:id]).destroy!
-    render json: {}, status: 204
+    begin
+      User.find(params[:id]).destroy!
+    rescue ActiveRecord::RecordNotFound
+      return render json: { "error": "User not found, Please enter valid user id" }, status: 400
+    rescue Exception => exc
+      return render json: { "error": exc.message }, status: 500
+    end
+    render status: 200
   end
 
-  # DELETE /user/login - Authenticate User
+  # Authenticate /user/login - Authenticate User
   def userLogin
     #TODO Authenticate User
   end

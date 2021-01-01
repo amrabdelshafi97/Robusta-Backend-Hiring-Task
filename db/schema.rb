@@ -72,17 +72,6 @@ ActiveRecord::Schema.define(version: 2021_01_01_020938) do
     t.index ["movie_id"], name: "index_movie_genres_on_movie_id"
   end
 
-  create_table "movie_rates", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "movie_id", null: false
-    t.float "rate"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["movie_id"], name: "index_movie_rates_on_movie_id"
-    t.index ["user_id", "movie_id"], name: "index_movie_rates_on_user_id_and_movie_id", unique: true
-    t.index ["user_id"], name: "index_movie_rates_on_user_id"
-  end
-
   create_table "movies", force: :cascade do |t|
     t.text "title", null: false
     t.text "description", null: false
@@ -91,10 +80,10 @@ ActiveRecord::Schema.define(version: 2021_01_01_020938) do
     t.integer "director_id", null: false
     t.integer "film_rate_id", null: false
     t.boolean "featured", default: false
+    t.text "poster_path", null: false
+    t.text "language"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "poster_path"
-    t.string "language"
   end
 
 # Could not dump table "news" because of following StandardError
@@ -105,6 +94,17 @@ ActiveRecord::Schema.define(version: 2021_01_01_020938) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["rate"], name: "index_rates_on_rate", unique: true
+  end
+
+  create_table "user_movie_rates", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "movie_id", null: false
+    t.float "rate"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "index_user_movie_rates_on_movie_id"
+    t.index ["user_id", "movie_id"], name: "index_user_movie_rates_on_user_id_and_movie_id", unique: true
+    t.index ["user_id"], name: "index_user_movie_rates_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -134,8 +134,8 @@ ActiveRecord::Schema.define(version: 2021_01_01_020938) do
   add_foreign_key "movie_celebrities", "movies"
   add_foreign_key "movie_genres", "genres"
   add_foreign_key "movie_genres", "movies"
-  add_foreign_key "movie_rates", "movies"
-  add_foreign_key "movie_rates", "users"
+  add_foreign_key "user_movie_rates", "movies"
+  add_foreign_key "user_movie_rates", "users"
   add_foreign_key "watchlists", "movies"
   add_foreign_key "watchlists", "users"
 end
