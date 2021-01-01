@@ -10,6 +10,17 @@ class Celebrity < ApplicationRecord
   has_many :movie_celebrities
   has_many :movies, through: :movie_celebrities
 
+  validates :display_name, length: { in: 3..20, message: "Name length not valid" }, presence: true
+  validates :first_name, length: { in: 3..10, message: "Name length not valid" }, presence: true
+  validates :last_name, length: { in: 3..10, message: "Name length not valid" }, presence: true
+  validates :biography, length: { maximum: 300, too_long: "Bio characters count is the maximum allowed" }
+  validates :birthdate, format: { with: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/, message: "Invalid date format yyyy-mm-dd" }, presence: true
+  validates :deathdate, format: { with: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/, message: "Invalid date format yyyy-mm-dd" }
+  validates :nationality, presence: true
+  validates :place_of_birth, presence: true
+  validates :celebrity_type, inclusion: { in: %w(actor director), message: "Please enter a valid type (actor/director)" }, presence: true
+  validates :gender, inclusion: { in: %w(male female), message: "Please enter a valid type (male/female)" }, presence: true
+
   settings do
     mappings dynamic: false do
       indexes :id, index: :not_analyzed

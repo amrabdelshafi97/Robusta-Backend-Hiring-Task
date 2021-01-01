@@ -7,13 +7,22 @@ class News < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
+  validates :title, presence: true, length: { in: 4..20,
+                                              too_short: "Award title is too short",
+                                              too_long: "Award title is too long" }
+  validates :subtitle, presence: true, length: { in: 10..100,
+                                                 too_short: "News description is too short",
+                                                 too_long: "News description is too long" }
+  validates :content, presence: true, length: { minimum: 50, message: "Please create content Of minimum length 50 characters" }
+  validates :posted_by, presence: true, numericality: { only_integer: true, message: "Please add a valid Id" }
+
   settings do
     mappings dynamic: false do
       indexes :id, index: :not_analyzed
       indexes :content, type: :text, analyzer: :english
     end
   end
-  
+
   def self.search_news_content(query)
     search(
       query: {

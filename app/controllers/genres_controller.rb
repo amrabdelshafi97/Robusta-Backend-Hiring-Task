@@ -25,7 +25,7 @@ class GenresController < ApplicationController
     render json: @genre, status: 202
   end
 
-  # Delete /genre/:id - Delete Genre By ID From Genres List
+  # DELETE /genre/:id - Delete Genre By ID From Genres List
   def destroy
     Genre.find(params[:id]).destroy!
     render json: {}, status: 200

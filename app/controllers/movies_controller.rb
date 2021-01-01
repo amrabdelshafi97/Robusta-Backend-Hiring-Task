@@ -87,7 +87,7 @@ class MoviesController < ApplicationController
     render json: @movie, status: 202
   end
 
-  # Delete /movie/:id - Delete Movie By ID From Movies List
+  # DELETE /movie/:id - Delete Movie By ID From Movies List
   def destroy
     movie_id = params[:id]
     if Movie.exists?(id: movie_id)

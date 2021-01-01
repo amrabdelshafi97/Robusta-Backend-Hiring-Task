@@ -25,7 +25,7 @@
       render json: @rate, status: 202
     end
   
-    # Delete /rate/:id - Delete Rate By ID From Rates List
+    # DELETE /rate/:id - Delete Rate By ID From Rates List
     def destroy
       Rate.find(params[:id]).destroy!
       render json: {}, status: 204

@@ -25,7 +25,7 @@ class CelebritiesController < ApplicationController
     render json: @celebrity, status: 202
   end
 
-  # Delete /celebrity/:id - Delete Celebrity By ID From Celebrities List
+  # DELETE /celebrity/:id - Delete Celebrity By ID From Celebrities List
   def destroy
     Celebrity.find(params[:id]).destroy!
     render json: {}, status: 200
