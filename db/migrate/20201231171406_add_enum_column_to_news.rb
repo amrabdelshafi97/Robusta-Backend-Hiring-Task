@@ -3,7 +3,7 @@ class AddEnumColumnToNews < ActiveRecord::Migration[6.1]
     execute <<-SQL
       CREATE TYPE permission_type AS ENUM ('admin', 'user');
       ALTER TABLE news
-      ADD COLUMN posted_by permission_type;
+      ADD COLUMN posted_by permission_type NOT NULL ;
     SQL
 
   end

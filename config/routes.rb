@@ -7,7 +7,11 @@ Rails.application.routes.draw do
     end
   end
   resources :celebrity, controller: "celebrities", only: [:index, :show, :create, :destroy, :update]
-  resources :news, controller: "news", only: [:index, :show, :create, :destroy, :update]
+  resources :news, controller: "news", only: [:index, :show, :create, :destroy, :update] do
+    collection do
+      get :search, action: :search
+    end
+  end
   resources :user, controller: "users", only: [:index, :show, :create, :destroy, :update] do
     collection do
       post :login, action: :userLogin
