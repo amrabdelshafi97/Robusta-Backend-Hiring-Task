@@ -10,8 +10,6 @@ class News < ApplicationRecord
   settings do
     mappings dynamic: false do
       indexes :id, index: :not_analyzed
-      indexes :title, type: :keyword
-      indexes :description, type: :keyword
       indexes :content, type: :text, analyzer: :english
     end
   end
