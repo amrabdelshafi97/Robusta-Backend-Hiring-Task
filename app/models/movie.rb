@@ -13,7 +13,4 @@ class Movie < ApplicationRecord
 
   validates_presence_of :title, :description
   validates :rating, numericality: true
-
-  def validate
-  end
 end

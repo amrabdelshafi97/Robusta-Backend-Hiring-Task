@@ -44,30 +44,30 @@ class MoviesController < ApplicationController
   def create
     movie = Movie.create(movie_params)
 
-    params.has_key?("actors_ids") && params["actors_ids"].each do
+    params["actors_ids"].present? && params["actors_ids"].each do
     |actor_id|
-      if Celebrity.exists?(id: actor_id, type: "actor")
+      if Celebrity.exists?(id: actor_id, celebrity_type: "celebrity")
         movie.movie_celebrities.build({ celebrity_id: actor_id })
       end
     end
 
-    params.has_key? ("awards_ids") && params["awards_ids"].each do
+    params["awards_ids"].present? && params["awards_ids"].each do
     |award_id|
       if Award.exists?(id: award_id)
         movie.movie_awards.build({ award_id: award_id })
       end
     end
 
-    params.has_key? ("genres_ids") && params["genres_ids"].each do
+    params["genres_ids"].present? && params["genres_ids"].each do
     |genre_id|
       if Genre.exists?(id: genre_id)
         movie.movie_genres.build({ genre_id: genre_id })
       end
     end
 
-    if params.has_key?("director_id")
+    if params["director_id"].present?
       director_id = params["director_id"]
-      if Celebrity.exists?(id: director_id, type: "director")
+      if Celebrity.exists?(id: director_id, celebrity_type: "director")
         movie.director_id = director_id
       end
     end
@@ -76,7 +76,7 @@ class MoviesController < ApplicationController
     render json: movie, status: 201
   end
 
-  # PUT/PATCH /movie/:id - Upadate A Movie By ID From Movies List
+  # PUT/PATCH /movie/:id - Update A Movie By ID From Movies List
   # User Can Use This To Add/Remove Movies To/From Featured Movies List
   def update
     begin
@@ -103,7 +103,7 @@ class MoviesController < ApplicationController
     movie_id = params[:id]
     movie = Movie.find(movie_id)
     movie.movie_rates.build({ user_id: req_params["user_id"] }).save!
-    render json: "Rate Submitted",status: 200
+    render json: "Rate Submitted", status: 200
   end
 
   # post /movie/:id/watchlist - Add A Movie For A User Watchlist
@@ -112,7 +112,7 @@ class MoviesController < ApplicationController
     movie_id = params[:id]
     movie = Movie.find(movie_id)
     movie.watchlists.build({ user_id: req_params["user_id"] }).save!
-    render json: "Added To Watchlist",status: 200
+    render json: "Added To Watchlist", status: 200
   end
 
   # post /movie/:id/comment - Add A User Comment/Review On A Movie
@@ -121,13 +121,13 @@ class MoviesController < ApplicationController
     movie_id = params[:id]
     movie = Movie.find(movie_id)
     movie.comments.build({ user_id: req_params["user_id"] }).save!
-    render json: "Comment Submitted",status: 200
+    render json: "Comment Submitted", status: 200
   end
 
   private
 
   def movie_params
-    params.permit(:title, :description, :rating, :release_date, :film_rate, :featured)
+    params.permit(:title, :description, :rating, :release_date, :film_rate_id, :featured, :actors_ids, :awards_ids, :genres_ids, :director_id, :poster_path, :language)
   end
 
   def movie_details_params

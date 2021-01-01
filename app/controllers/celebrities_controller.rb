@@ -34,6 +34,6 @@ class CelebritiesController < ApplicationController
   private
 
   def actor_params
-    params.permit(:display_name, :first_name, :last_name, :gender, :birthdate, :deathdate)
+    params.permit(:display_name, :first_name, :last_name, :gender, :birthdate, :deathdate, :nationality, :celebrity_type, :biography, :place_of_birth)
   end
 end
