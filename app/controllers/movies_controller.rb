@@ -7,9 +7,31 @@ class MoviesController < ApplicationController
   def index
     begin
       movies = Movie.all
+      query_params = request.query_parameters
+
+      if query_params.has_key?("category")
+        category_opt = query_params["category"]
+        movies = movies.group_by { |movie| movie[category_opt] }
+      end
+
+      if query_params.has_key?("sort")
+        sort_opt = query_params["sort"]
+        movies = movies.sort_by { |movie| movie[sort_opt] }
+      end
+
+      if query_params.has_key?("week_limit")
+        week_limit_no = query_params["week_limit"]
+        movies = movies.where('release_date > ?', week_limit_no.week.ago)
+      end
+
+      if query_params.has_key?("featured")
+        is_featured = ActiveModel::Type::Boolean.new.cast(query_params["featured"])
+        movies = movies.where(featured: is_featured)
+      end
     rescue Exception => exc
       return render json: { "error": exc.message }, status: 500
     end
+
     render json: movies, status: 200
   end
 
@@ -57,6 +79,7 @@ class MoviesController < ApplicationController
           movie.director_id = director_id
         end
       end
+
       if movie.errors.size > 0
         return render json: movie.errors, status: 400
       end

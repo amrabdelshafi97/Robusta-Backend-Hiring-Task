@@ -14,8 +14,8 @@ class Celebrity < ApplicationRecord
   validates :first_name, length: { in: 3..10, message: "Name length not valid" }, presence: true
   validates :last_name, length: { in: 3..10, message: "Name length not valid" }, presence: true
   validates :biography, length: { maximum: 300, too_long: "Bio characters count is the maximum allowed" }
-  validates :birthdate, format: { with: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/, message: "Invalid date format yyyy-mm-dd" }, presence: true
-  validates :deathdate, format: { with: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/, message: "Invalid date format yyyy-mm-dd" }
+  validates :birthdate, format: { with: /\A\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])\z/, message: "Invalid date format yyyy-mm-dd" }, presence: true
+  validates :deathdate, format: { with: /\A\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])\z/, message: "Invalid date format yyyy-mm-dd" }
   validates :nationality, presence: true
   validates :place_of_birth, presence: true
   validates :celebrity_type, inclusion: { in: %w(actor director), message: "Please enter a valid type (actor/director)" }, presence: true
