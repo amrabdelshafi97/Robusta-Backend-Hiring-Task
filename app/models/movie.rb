@@ -25,12 +25,12 @@ class Movie < ApplicationRecord
                                                     too_short: "Movie title is too short",
                                                     too_long: "Movie title is too long" }
   validates :rating, inclusion: { in: 0.0..10.0 }
-  validates :release_date, format: { with: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/, message: "Invalid date format yyyy-mm-dd" }, presence: true
+  validates :release_date, format: { with: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/, message: "Invalid date format yyyy-mm-dd", multiline: true }, presence: true
   validates :director_id, numericality: { only_integer: true }, presence: true
   validates :film_rate_id, numericality: { only_integer: true }, presence: true
   validates :featured, inclusion: [true, false]
   validates :poster_path, presence: true
-  validates :language
+  validates :language, presence: true
 
   settings do
     mappings dynamic: false do
