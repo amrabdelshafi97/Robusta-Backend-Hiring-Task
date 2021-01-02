@@ -1,16 +1,134 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Movies</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Movies</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+      .navbar {
+          margin-bottom: 0;
+          border-radius: 0;
+          position: fixed;
+          top: 0;
+          right: 0;
+          left: 0;
+          z-index: 1030;
+      }
 
-  <body>
-    <%= yield %>
-  </body>
+      /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+      .row.content {
+          height: 100%;
+      }
+
+      /* Set gray background color and 100% height */
+      .sidenav {
+          padding-top: 20px;
+          background-color: #f1f1f1;
+          height: 100%;
+      }
+
+      .searchbar {
+          margin-top: 8px;
+      }
+
+      /* Set black background color, white text and some padding */
+      footer {
+          background-color: #555;
+          color: white;
+          padding: 15px;
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 60px;
+          line-height: 60px;
+      }
+
+      .container {
+          padding-top: 50px;
+      }
+
+      /* On small screens, set height to 'auto' for sidenav and grid */
+      @media screen and (max-width: 767px) {
+          .sidenav {
+              height: auto;
+              padding: 15px;
+          }
+
+          .row.content {
+              height: auto;
+          }
+      }
+  </style>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-expand-md">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Robusta Movie App</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav mr-auto">
+        <li><a href="/movie">Movies</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/celebrity">Celebrities</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if logged_in? %>
+          <li>
+            <a href="/user/<%= current_user.id %>"><span class="glyphicon glyphicon-user"></span> <%= current_user.username %>
+            </a></li>
+          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        <% else %>
+          <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <% end %>
+
+      </ul>
+      <form class="form-inline mt-md-2 searchbar">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+
+  </div>
+</nav>
+
+<main role="main" class="container-fluid text-center container">
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+    </div>
+    <div class="col-sm-8 text-center">
+      <%= yield %>
+    </div>
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer text-center">
+  <div class="text-center p-3">
+    © 2020 Copyright:
+    <a class="text-dark" href="https://github.com/AmrAyoub97/Robusta-Backend-Hiring-Task">Amr Ayman Ayoub</a>
+  </div>
+</footer>
+</body>
 </html>
