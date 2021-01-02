@@ -18,6 +18,7 @@ class Movie < ApplicationRecord
   has_many :comments
   has_many :user_movie_rates
 
+  DATE_FORMAT_REGEX = /\A\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])\z/
   validates :title, presence: true, length: { in: 4..20,
                                               too_short: "Movie title is too short",
                                               too_long: "Movie title is too long" }
@@ -25,7 +26,7 @@ class Movie < ApplicationRecord
                                                     too_short: "Movie title is too short",
                                                     too_long: "Movie title is too long" }
   validates :rating, inclusion: { in: 0.0..10.0 }
-  validates :release_date, format: { with: /\A\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])\z/, message: "Invalid date format yyyy-mm-dd", multiline: true }, presence: true
+  validates :release_date, format: { with: DATE_FORMAT_REGEX, message: "Invalid date format yyyy-mm-dd", multiline: true }, presence: true
   validates :director_id, numericality: { only_integer: true }, presence: true
   validates :film_rate_id, numericality: { only_integer: true }, presence: true
   validates :featured, inclusion: [true, false]
