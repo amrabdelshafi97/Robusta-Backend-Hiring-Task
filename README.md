@@ -11,18 +11,19 @@
 * Implement the Crud operations
 * Write Unit Tests
 * Add elasticsearch for best searching performance
-* Add ActiveAdmin to ease the crud operations for the admin through a user friendly forms
+* Add ActiveAdmin to ease the crud operations for the admin through a friendly user interface
 * Create docker-compose for running needed tools
 ### At first there are some steps we should take in order to run the app correctly:
 `bundle install` to install all the needed gems
 `rails s` to run rails server
 `docker-compose up -d` to pull postgres and elasticseach images and run their containers
+here to create admin panel credentials.
 ```
 rails c
 AdminUser.create!(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password')
 ```
-open `http://localhost:3000/admin` at your browser, so you can enter data.
-In order to run elasticsearch you need to run these commands at Ruby console
+open `http://localhost:3000/admin` at your browser, so you can input data from admin panel.
+In order to run elasticsearch you need to run these commands at Ruby console, for the following models:
 ```
  rails c
  Celebrity.__elasticsearch__.create_index
