@@ -15,23 +15,31 @@ class Movie < ApplicationRecord
   has_many :genres, through: :movie_genres
   has_many :watchlists
   has_many :users, through: :watchlists
-  has_many :comments
+  has_many :reviews
   has_many :user_movie_rates
+  has_one :rate
+  has_one :celebrity
 
   DATE_FORMAT_REGEX = /\A\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])\z/
-  validates :title, presence: true, length: { in: 4..20,
+  validates :title, presence: true, length: { in: 4..50,
                                               too_short: "Movie title is too short",
                                               too_long: "Movie title is too long" }
-  validates :description, presence: true, length: { in: 10..100,
-                                                    too_short: "Movie title is too short",
-                                                    too_long: "Movie title is too long" }
-  validates :rating, inclusion: { in: 0.0..10.0 }
+  validates :description, presence: true, length: { in: 10..300,
+                                                    too_short: "Movie description is too short",
+                                                    too_long: "Movie description is too long" }
   validates :release_date, format: { with: DATE_FORMAT_REGEX, message: "Invalid date format yyyy-mm-dd", multiline: true }, presence: true
   validates :director_id, numericality: { only_integer: true }, presence: true
   validates :film_rate_id, numericality: { only_integer: true }, presence: true
   validates :featured, inclusion: [true, false]
   validates :poster_path, presence: true
   validates :language, presence: true
+  validate director_id_is_celebrity_type_director
+
+  def director_id_is_celebrity_type_director
+    unless Celebrity.exists?(id: director_id, celebrity_type: "director")
+      errors.add(:director_id, "Please add id that belongs to a director")
+    end
+  end
 
   settings do
     mappings dynamic: false do

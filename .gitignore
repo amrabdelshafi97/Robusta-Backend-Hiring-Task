@@ -99,3 +99,4 @@ yarn-debug.log*
 
 # Other files
 .idea
+/config/local_env.yml

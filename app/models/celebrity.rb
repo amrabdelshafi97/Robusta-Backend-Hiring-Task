@@ -12,9 +12,9 @@ class Celebrity < ApplicationRecord
 
   DATE_FORMAT_REGEX = /\A\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])\z/
 
-  validates :display_name, length: { in: 3..20, message: "Name length not valid" }, presence: true
-  validates :first_name, length: { in: 3..10, message: "Name length not valid" }, presence: true
-  validates :last_name, length: { in: 3..10, message: "Name length not valid" }, presence: true
+  validates :display_name, length: { in: 3..50, message: "Name length not valid" }, presence: true
+  validates :first_name, length: { in: 3..20, message: "Name length not valid" }, presence: true
+  validates :last_name, length: { in: 3..20, message: "Name length not valid" }, presence: true
   validates :biography, length: { maximum: 300, too_long: "Bio characters count is the maximum allowed" }
   validates :birthdate, format: { with: DATE_FORMAT_REGEX, message: "Invalid date format yyyy-mm-dd" }, presence: true
   validates :deathdate, format: { with: DATE_FORMAT_REGEX, message: "Invalid date format yyyy-mm-dd" }

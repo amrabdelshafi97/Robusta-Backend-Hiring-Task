@@ -29,6 +29,7 @@ class CelebritiesController < ApplicationController
         return render json: celebrity.errors, status: 400
       end
     rescue Exception => exc
+      puts exc.message
       return render json: { "error" => exc.message }, status: 500
     end
     render json: celebrity, status: 200
@@ -77,6 +78,6 @@ class CelebritiesController < ApplicationController
   private
 
   def celebrity_params
-    params.permit(:display_name, :first_name, :last_name, :gender, :birthdate, :deathdate, :nationality, :celebrity_type, :biography, :place_of_birth)
+    params.require(:celebrity).permit(:display_name, :first_name, :last_name, :gender, :birthdate, :deathdate, :nationality, :celebrity_type, :biography, :place_of_birth)
   end
 end
