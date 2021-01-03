@@ -65,6 +65,6 @@ class AwardsController < ApplicationController
   private
 
   def award_params
-    params.require(:award)
+    params.require(:award).permit(:award)
   end
 end

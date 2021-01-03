@@ -22,17 +22,6 @@
           z-index: 1030;
       }
 
-      /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-      .row.content {
-          height: 100%;
-      }
-
-      /* Set gray background color and 100% height */
-      .sidenav {
-          padding-top: 20px;
-          background-color: #f1f1f1;
-          height: 100%;
-      }
 
       .searchbar {
           margin-top: 8px;
@@ -54,17 +43,6 @@
           padding-top: 50px;
       }
 
-      /* On small screens, set height to 'auto' for sidenav and grid */
-      @media screen and (max-width: 767px) {
-          .sidenav {
-              height: auto;
-              padding: 15px;
-          }
-
-          .row.content {
-              height: auto;
-          }
-      }
   </style>
 </head>
 
@@ -108,18 +86,12 @@
 
 <main role="main" class="container-fluid text-center container">
   <div class="row content">
-    <div class="col-sm-2 sidenav">
+    <div class="col-sm-2">
     </div>
-    <div class="col-sm-8 text-center">
+    <div class="col-sm-8">
       <%= yield %>
     </div>
-    <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
+    <div class="col-sm-2">
     </div>
   </div>
 </main>

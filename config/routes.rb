@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   root 'sessions#welcome'
 
   resources :movies, controller: "movies", only: [:index, :show, :create, :destroy, :update] do
     member do
       post :rate, action: :addMovieRate
       post :watchlist, action: :addMovieToUserWatchlist
-      post :comment, action: :addUserCommentToMovie
+      post :review, action: :addUserReviewToMovie
     end
     collection do
       get :search, action: :search

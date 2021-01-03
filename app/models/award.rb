@@ -3,7 +3,7 @@ class Award < ApplicationRecord
   has_many :movies, through: :movie_awards
 
   validates :award,
-            length: { in: 4..20,
+            length: { in: 4..50,
                       too_short: "Award title is too short",
                       too_long: "Award title is too long" },
             uniqueness: { message: "Award title is already present" },
