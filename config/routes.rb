@@ -1,15 +1,19 @@
 Rails.application.routes.draw do
-  resources :movie, controller: "movies", only: [:index, :show, :create, :destroy, :update] do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+  root 'sessions#welcome'
+
+  resources :movies, controller: "movies", only: [:index, :show, :create, :destroy, :update] do
     member do
       post :rate, action: :addMovieRate
       post :watchlist, action: :addMovieToUserWatchlist
-      post :comment, action: :addUserCommentToMovie
+      post :review, action: :addUserReviewToMovie
     end
     collection do
       get :search, action: :search
     end
   end
-  resources :celebrity, controller: "celebrities", only: [:index, :show, :create, :destroy, :update] do
+  resources :celebrities, controller: "celebrities", only: [:index, :show, :create, :destroy, :update] do
     collection do
       get :search, action: :search
     end
@@ -19,15 +23,19 @@ Rails.application.routes.draw do
       get :search, action: :search
     end
   end
-  resources :user, controller: "users", only: [:index, :show, :create, :destroy, :update] do
-    collection do
-      post :login, action: :userLogin
-    end
+  resources :users, controller: "users", only: [:index, :show, :create, :destroy, :update] do
     member do
       get :watchlist, action: :getUserMovieWatchList
     end
   end
-  resources :genre, controller: "genres", only: [:index, :show, :create, :destroy, :update]
-  resources :award, controller: "awards", only: [:index, :show, :create, :destroy, :update]
-  resources :rate, controller: "rates", only: [:index, :show, :create, :destroy, :update]
+  resources :genres, controller: "genres", only: [:index, :show, :create, :destroy, :update]
+  resources :awards, controller: "awards", only: [:index, :show, :create, :destroy, :update]
+  resources :rates, controller: "rates", only: [:index, :show, :create, :destroy, :update]
+  resources :sessions, only: [:new, :create, :destroy]
+
+  get 'signup', to: 'users#new'
+  post 'signup', to: 'users#create'
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  get 'logout', to: 'sessions#destroy'
 end

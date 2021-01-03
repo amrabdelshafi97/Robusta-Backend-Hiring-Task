@@ -29,7 +29,7 @@ class MoviesController < ApplicationController
         movies = movies.where(featured: is_featured)
       end
     rescue Exception => exc
-      return render json: { error => exc.message }, status: 500
+      return render json: { "error": exc.message }, status: 500
     end
 
     render json: movies, status: 200
@@ -73,12 +73,6 @@ class MoviesController < ApplicationController
         end
       end
 
-      if params["director_id"].present?
-        director_id = params["director_id"]
-        if Celebrity.exists?(id: director_id, celebrity_type: "director")
-          movie.director_id = director_id
-        end
-      end
       if movie.errors.size > 0
         return render json: movie.errors, status: 400
       end
@@ -181,20 +175,20 @@ class MoviesController < ApplicationController
     render json: "Added To Watchlist", status: 200
   end
 
-  # post /movie/:id/comment - Add A User Comment/Review On A Movie
-  def addUserCommentToMovie
+  # post /movie/:id/review - Add A User Review/Review On A Movie
+  def addUserReviewToMovie
     begin
       Movie.find(params[:id])
       req_params = movie_user_rate_params
       movie_id = params[:id]
       movie = Movie.find(movie_id)
-      movie.comments.build({ user_id: req_params["user_id"], comment: req_params["comment"] }).save!
+      movie.reviews.build({ user_id: req_params["user_id"], review: req_params["review"] }).save!
     rescue ActiveRecord::RecordNotFound
       return render json: { "error": "Movie not found, Please enter valid movie id" }, status: 400
     rescue Exception => exc
       return render json: { "error" => exc.message }, status: 500
     end
-    render json: "Comment Submitted", status: 200
+    render json: "Review Submitted", status: 200
   end
 
   # GET /movie/search?query=something - Search In News Content About Word "something"
@@ -213,7 +207,7 @@ class MoviesController < ApplicationController
   private
 
   def movie_params
-    params.permit(:title, :description, :rating, :release_date, :film_rate_id, :featured, :actors_ids, :awards_ids, :genres_ids, :director_id, :poster_path, :language)
+    params.require(:movie).permit(:title, :description, :release_date, :film_rate_id, :featured, :actors_ids, :awards_ids, :genres_ids, :director_id, :poster_path, :language)
   end
 
   def movie_details_params
@@ -228,7 +222,7 @@ class MoviesController < ApplicationController
     params.permit(:user_id)
   end
 
-  def movie_user_comment_params
-    params.permit(:user_id, :comment)
+  def movie_user_review_params
+    params.permit(:user_id, :review)
   end
 end

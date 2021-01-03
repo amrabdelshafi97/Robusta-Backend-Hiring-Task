@@ -14,7 +14,6 @@ class News < ApplicationRecord
                                                  too_short: "News description is too short",
                                                  too_long: "News description is too long" }
   validates :content, presence: true, length: { minimum: 50, message: "Please create content Of minimum length 50 characters" }
-  validates :posted_by, presence: true, numericality: { only_integer: true, message: "Please add a valid Id" }
 
   settings do
     mappings dynamic: false do

@@ -1,5 +1,5 @@
 class Rate < ApplicationRecord
-  validates :genre,
+  validates :rate,
             presence: true,
             uniqueness: true,
             inclusion: { in: %w(G P PG-13 R NC-17),

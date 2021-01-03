@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  def new
+    @user = User.new
+  end
+
   # GET /user - Get All Users List
   # GET /user - Get All Users List
   def index
@@ -25,14 +29,22 @@ class UsersController < ApplicationController
   # POST /user - Add A New User To Users List
   def create
     begin
-      user = User.create(user_params)
-      if user.errors.size > 0
-        return render json: user.errors, status: 400
+      #@user.errors.clear
+
+      @user = User.new(user_params)
+      if @user.save
+        flash[:success] = "Please check your email to activate your account."
+        UserMailer.with(user: @user).welcome_email.deliver_now
+        session[:user_id] = @user.id
+        redirect_to '/'
+      end
+      if @user.errors.any?
+        render 'new'
       end
     rescue Exception => exc
       return render json: { "error" => exc.message }, status: 500
     end
-    render json: user, status: 200
+    #render json: @user, status: 200
   end
 
   # PUT/PATCH /user/:id - Update An User By ID From Users List
@@ -77,6 +89,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:username, :email, :password)
+    params.require(:user).permit(:username, :email, :password)
   end
 end
