@@ -15,9 +15,10 @@
 * Create docker-compose for running needed tools
 ### At first there are some steps we should take in order to run the app correctly:
 `bundle install` to install all the needed gems
-`rails s` to run rails server
 `docker-compose up -d` to pull postgres and elasticseach images and run their containers
 here to create admin panel credentials.
+`rake db:migrate` to run all migrations and construct the database
+`rails s` to run rails server
 ```
 rails c
 AdminUser.create!(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password')
