@@ -25,7 +25,6 @@ class Celebrity < ApplicationRecord
 
   settings do
     mappings dynamic: false do
-      indexes :id, index: :not_analyzed
       indexes :display_name, type: :text, analyzer: :english
     end
   end

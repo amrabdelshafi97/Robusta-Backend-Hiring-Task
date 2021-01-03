@@ -1,0 +1,109 @@
+@import "bootstrap";
+
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+
+html {
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+
+.searchbar {
+    margin-top: 8px;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+    background-color: #555;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+}
+
+container {
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+}
+
+main-container {
+    max-width: 1016px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.login-button {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background: rgba(59, 89, 152, .1);
+}
+
+.login-facebook-icon {
+    background-color: #3b5998;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 48px;
+    text-align: center;
+    height: 48px;
+    width: 58px;
+    float: left;
+}
+
+.login-facebook-text {
+    color: #3b5998;
+    font-family: HelveticaNeueW01-55Roma, HelveticaNeueW02-55Roma, HelveticaNeueW10-55Roma, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 46px;
+    text-align: center;
+    width: 239px;
+    height: 48px;
+    padding-left: 58px;
+    border: 1px solid #3b5998;
+}

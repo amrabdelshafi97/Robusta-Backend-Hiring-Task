@@ -102,8 +102,13 @@ ActiveRecord::Schema.define(version: 2021_01_03_054349) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-# Could not dump table "news" because of following StandardError
-#   Unknown type 'permission_type' for column 'posted_by'
+  create_table "news", force: :cascade do |t|
+    t.text "title", null: false
+    t.text "subtitle", null: false
+    t.text "content", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "rates", force: :cascade do |t|
     t.text "rate", null: false

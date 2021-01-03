@@ -1,0 +1,17 @@
+<div class="card-group">
+  <% @movies.each do |movie| %>
+    <div style="cursor: pointer;" onclick="window.location='/movies/<%= movie.id %>'">
+      <div class="card" style="max-width: 25rem; border: 1px solid black">
+        <img class="card-img-top" src="https://fakeimg.pl/250/" alt="Card image cap">
+        <div class="card-body">
+          <h3 class="card-title"><%= movie.title %></h3>
+          <p class="card-text" style="text-align: left">
+            <%= movie.description %></p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted"><%= movie.release_date %></small>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

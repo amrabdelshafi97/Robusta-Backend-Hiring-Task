@@ -1,11 +1,12 @@
 version: '3'
 
 services:
-  database:
+  postgres:
+    container_name: postgres_container
     image: postgres
-    env_file:
-      POSTGRES_USER=postgres
-      POSTGRES_PASSWORD=1234
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
     ports:
       - "5432:5432"
   elasticsearch:
