@@ -6,7 +6,7 @@ class MovieCelebrity < ApplicationRecord
   validates :celebrity_id, numericality: { only_integer: true, message: "Please add a valid Id" }
   validates :movie_id, numericality: { only_integer: true, message: "Please add a valid Id" }
 
-  validate celebrity_id_is_celebrity_type_actor
+  validate :celebrity_id_is_celebrity_type_actor
 
   def celebrity_id_is_celebrity_type_actor
     unless Celebrity.exists?(id: celebrity_id, celebrity_type: "actor")

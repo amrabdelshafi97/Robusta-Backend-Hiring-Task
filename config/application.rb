@@ -10,11 +10,6 @@ module Movies
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
-    config.before_configuration do
-      YAML.load(File.open('local_env.yml')).each do |key, value|
-        ENV[key.to_s] = value
-      end if File.exists?('local_env.yml')
-    end
 
     # Configuration for the application, engines, and railties goes here.
     #
