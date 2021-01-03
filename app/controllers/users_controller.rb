@@ -75,11 +75,6 @@ class UsersController < ApplicationController
     render status: 200
   end
 
-  # Authenticate /user/login - Authenticate User
-  def userLogin
-    #TODO Authenticate User
-  end
-
   #GET /user/:id/watchlist - Get User Movies Watchlist
   def getUserMovieWatchList
     user_movies = User.find(params[:id]).movies
