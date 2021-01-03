@@ -1,19 +1,26 @@
-<h1>Login</h1>
-<p>Login to your account using the form below. All fields are required.</p>
-<%= form_for :user, url: "/login" do |form| %>
-  <div class='form-group'>
-    <%= form.label :username %>
-    <%= form.text_field :username, class: 'form-control', required: true %>
-  </div>
-  <div class='form-group'>
-    <%= form.label :password %>
-    <%= form.password_field :password, class: 'form-control', required: true %>
-  </div>
-  <%= form.submit 'Login', class: 'btn btn-primary' %>
-  <div>
-    <% unless current_user %>
-      <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
-    <% end %>
-  </div>
+<div class="login-form">
+  <h1>Login</h1>
+  <p>Login to your account using the form below.</p>
+  <%= form_for :user, url: "/login" do |form| %>
+    <div class='form-group'>
+      <%= form.label :username %>
+      <%= form.text_field :username, required: true %>
+    </div>
+    <div class='form-group'>
+      <%= form.label :password %>
+      <%= form.password_field :password, required: true %>
+    </div>
+    <%= form.submit 'Login', class: 'btn btn-primary' %>
+    <div style="margin-top: 8px">
+      <% unless current_user %>
+        <div class="login-button">
+          <div class="login-facebook-icon">f</div>
+          <div class="login-facebook-text">
+            <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
+          </div>
+        </div>
+      <% end %>
+    </div>
 
-<% end %>
+  <% end %>
+</div>

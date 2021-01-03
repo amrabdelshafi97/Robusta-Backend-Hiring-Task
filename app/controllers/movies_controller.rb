@@ -1,53 +1,50 @@
 class MoviesController < ApplicationController
-  # GET /movie - Get All Movies List
-  # GET /movie?category=genre - Get All Movies List Categorized Bu "genre"
-  # GET /movie?sort=release_date - Get All Movies List Sorted By "release_date"
-  # GET /movie?week_limit=1 - Get All Movies List Released Within "1" week
-  # GET /movie?featured=true - Get All Featured Movies List
+  # GET /movie - Get All @movies List
+  # GET /movie?category=genre - Get All @movies List Categorized Bu "genre"
+  # GET /movie?sort=release_date - Get All @movies List Sorted By "release_date"
+  # GET /movie?week_limit=1 - Get All @movies List Released Within "1" week
+  # GET /movie?featured=true - Get All Featured @movies List
   def index
     begin
-      movies = Movie.all
+      @movies = Movie.all
       query_params = request.query_parameters
 
       if query_params.has_key?("category")
         category_opt = query_params["category"]
-        movies = movies.group_by { |movie| movie[category_opt] }
+        @movies = @movies.group_by { |movie| movie[category_opt] }
       end
 
       if query_params.has_key?("sort")
         sort_opt = query_params["sort"]
-        movies = movies.sort_by { |movie| movie[sort_opt] }
+        @movies = @movies.sort_by { |movie| movie[sort_opt] }
       end
 
       if query_params.has_key?("week_limit")
-        week_limit_no = query_params["week_limit"]
-        movies = movies.where('release_date > ?', week_limit_no.week.ago)
+        week_limit_no = query_params["week_limit"].to_i
+        @movies = @movies.where('release_date > ?', week_limit_no.week.ago)
       end
 
       if query_params.has_key?("featured")
         is_featured = ActiveModel::Type::Boolean.new.cast(query_params["featured"])
-        movies = movies.where(featured: is_featured)
+        @movies = @movies.where(featured: is_featured)
       end
     rescue Exception => exc
       return render json: { "error": exc.message }, status: 500
     end
-
-    render json: movies, status: 200
   end
 
-  # GET /movie/:id - Get Movie By ID From Movies List
+  # GET /movie/:id - Get Movie By ID From @movies List
   def show
     begin
-      movie = Movie.find(params[:id])
+      @movie = Movie.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       return render json: { "error": "Movie not found, Please enter valid movie id" }, status: 400
     rescue Exception => exc
       return render json: { "error": exc.message }, status: 500
     end
-    render json: movie, status: 200
   end
 
-  # POST /movie - Add A New Movie To Movies List
+  # POST /movie - Add A New Movie To @movies List
   def create
     begin
       movie = Movie.create(movie_params)
@@ -84,8 +81,8 @@ class MoviesController < ApplicationController
 
   end
 
-  # PUT/PATCH /movie/:id - Update A Movie By ID From Movies List
-  # User Can Use This To Add/Remove Movies To/From Featured Movies List
+  # PUT/PATCH /movie/:id - Update A Movie By ID From @movies List
+  # User Can Use This To Add/Remove @movies To/From Featured @movies List
   def update
     begin
       Movie.find(params[:id])
@@ -130,7 +127,7 @@ class MoviesController < ApplicationController
     render json: movie, status: 200
   end
 
-  # DELETE /movie/:id - Delete Movie By ID From Movies List
+  # DELETE /movie/:id - Delete Movie By ID From @movies List
   def destroy
     begin
       Movie.find(params[:id]).destroy!
@@ -143,7 +140,7 @@ class MoviesController < ApplicationController
   end
 
   # post /movie/:id/rate - Add User Rate from 0 to 10 To A Movie
-  def addMovieRate
+  def add_movie_rate
     begin
       Movie.find(params[:id])
       req_params = movie_user_rate_params
@@ -159,7 +156,7 @@ class MoviesController < ApplicationController
   end
 
   # post /movie/:id/watchlist - Add A Movie For A User Watchlist
-  def addMovieToUserWatchlist
+  def add_movie_to_user_watchlist
     begin
       Movie.find(params[:id])
       req_params = movie_user_rate_params
@@ -176,7 +173,7 @@ class MoviesController < ApplicationController
   end
 
   # post /movie/:id/review - Add A User Review/Review On A Movie
-  def addUserReviewToMovie
+  def add_user_review_to_movie
     begin
       Movie.find(params[:id])
       req_params = movie_user_rate_params
@@ -196,12 +193,13 @@ class MoviesController < ApplicationController
     begin
       return render json: "Please enter query", status: 400 unless request.query_parameters['query']
       query = request.query_parameters['query']
-      movies = Movie.search_movie_title(query)
+      @movies = Movie.search_movie_title(query)
+
     rescue Exception => exc
       return render json: { "error" => exc.message }, status: 500
     end
 
-    render json: movies, status: 200
+    render json: @movies, status: 200
   end
 
   private

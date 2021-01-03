@@ -43,7 +43,6 @@ class Movie < ApplicationRecord
 
   settings do
     mappings dynamic: false do
-      indexes :id, index: :not_analyzed
       indexes :title, type: :text, analyzer: :english
     end
   end

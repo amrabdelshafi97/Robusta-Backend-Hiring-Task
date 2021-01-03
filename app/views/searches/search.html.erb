@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h2>Movies Results:</h2>
+      <div class="card-group">
+        <% @movies.each do |movie| %>
+          <div style="cursor: pointer;" onclick="window.location='/movies/<%= movie.id %>'">
+            <div class="card" style="max-width: 25rem; border: 1px solid black">
+              <img class="card-img-top" src="https://fakeimg.pl/250/" alt="Card image cap">
+              <div class="card-body">
+                <h3 class="card-title"><%= movie.title %></h3>
+                <p class="card-text" style="text-align: left">
+                  <%= movie.description %></p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted"><%= movie.release_date %></small>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-sm">
+      <h2>News Results:</h2>
+      <div class="card-group">
+        <% @News.each do |news| %>
+          <div style="cursor: pointer;" onclick="window.location='/movies/<%= news.id %>'">
+            <div class="card" style="max-width: 25rem; border: 1px solid black">
+              <img class="card-img-top" src="https://fakeimg.pl/250/" alt="Card image cap">
+              <div class="card-body">
+                <h3 class="card-title"><%= news.title %></h3>
+                <p class="card-text" style="text-align: left">
+                  <%= news.subtitle %></p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted"><%= news.created_at %></small>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-sm">
+      <h2>Celebrties Results:</h2>
+      <div class="card-group">
+        <% @celebrities.each do |celebrity| %>
+          <div style="cursor: pointer;" onclick="window.location='/movies/<%= celebrity.id %>'">
+            <div class="card" style="max-width: 25rem; border: 1px solid black">
+              <img class="card-img-top" src="https://fakeimg.pl/250/" alt="Card image cap">
+              <div class="card-body">
+                <h3 class="card-title"><%= celebrity.display_name %></h3>
+                <p class="card-text" style="text-align: left">
+                  <%= celebrity.biography %></p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted"><%= celebrity.birthdate %></small>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

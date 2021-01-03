@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :awards, controller: "awards", only: [:index, :show, :create, :destroy, :update]
   resources :rates, controller: "rates", only: [:index, :show, :create, :destroy, :update]
   resources :sessions, only: [:new, :create, :destroy]
+  resources :searches, only: [:search]
 
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
@@ -39,6 +40,7 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   get 'logout', to: 'sessions#destroy'
 
+  get 'search', to: 'searches#search'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
 end
