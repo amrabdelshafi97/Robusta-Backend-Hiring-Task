@@ -4,7 +4,6 @@
 * CRUD operations for(movies/celebrities/Genres/...)
 * Manual registering and with Facebook
 * Search at Movies, Celebrities, News
-=======
 ## User Storiers
 * Initlazize RoR app
 * Design the ERD
@@ -14,7 +13,6 @@
 * Add elasticsearch for best searching performance
 * Add ActiveAdmin to ease the crud operations for the admin through a user friendly forms
 * Create docker-compose for running needed tools
-=======
 ### At first there are some steps we should take in order to run the app correctly:
 `bundle install` to install all the needed gems
 `rails s` to run rails server
