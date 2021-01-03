@@ -5,7 +5,7 @@
 * Manual registering and with Facebook
 * Search at Movies, Celebrities, News
 ## User Storiers
-* Initlazize RoR app
+* initialize RoR app
 * Design the ERD
 * Create the database which is postgres and apply the ERD we already created
 * Implement the Crud operations
