@@ -33,7 +33,7 @@ class Movie < ApplicationRecord
   validates :featured, inclusion: [true, false]
   validates :poster_path, presence: true
   validates :language, presence: true
-  validate director_id_is_celebrity_type_director
+  validate :director_id_is_celebrity_type_director
 
   def director_id_is_celebrity_type_director
     unless Celebrity.exists?(id: director_id, celebrity_type: "director")

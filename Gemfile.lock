@@ -118,6 +118,8 @@ GEM
       ruby2_keywords
     faraday-net_http (1.0.0)
     ffi (1.14.2-x64-mingw32)
+    figaro (1.2.0)
+      thor (>= 0.14.0, < 2)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.6.0)
@@ -301,6 +303,7 @@ DEPENDENCIES
   devise
   elasticsearch-model
   elasticsearch-rails
+  figaro
   jbuilder (~> 2.7)
   mail
   pg
